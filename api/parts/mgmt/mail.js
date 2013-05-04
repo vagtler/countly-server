@@ -16,7 +16,7 @@ var mail = {},
  */
 
 function sendMail(message) {
-    message.from = '"Countly"';
+    message.from = countlyConfig.mail.from;
 
     smtpTransport.sendMail(message, function (error) {
         if (error) {
@@ -31,7 +31,7 @@ mail.sendToNewMember = function (member, memberPassword) {
     lookup(function(err, host) {
         var message = {
             to:member.email,
-            subject:'Your Countly Account',
+            subject: countlyConfig.mail.subject.newMember,
             html:'Hi ' + getUserFirstName(member) + ',<br/><br/>' +
                 'Your Countly account on <a href="' + host + '">' + host + '</a> is created with the following details;<br/><br/>' +
                 'Username: ' + member.username + '<br/>' +
@@ -48,7 +48,7 @@ mail.sendToUpdatedMember = function (member, memberPassword) {
     lookup(function(err, host) {
         var message = {
             to:member.email,
-            subject:'Countly Account - Password Change',
+            subject: countlyConfig.mail.subject.updatedMember,
             html:'Hi ' + getUserFirstName(member) + ',<br/><br/>' +
                 'Your password for your Countly account on <a href="' + host + '">' + host + '</a> has been changed. Below you can find your updated account details;<br/><br/>' +
                 'Username: ' + member.username + '<br/>' +
@@ -65,7 +65,7 @@ mail.sendPasswordResetInfo = function (member, prid) {
     lookup(function(err, host) {
         var message = {
             to:member.email,
-            subject:'Countly Account - Password Reset',
+            subject: countlyConfig.mail.subject.passwordResetInfo,
             html:'Hi ' + getUserFirstName(member) + ',<br/><br/>' +
                 'You can reset your Countly account password by following ' +
                 '<a href="' + host + '/reset/' + prid + '">this link</a>.<br/><br/>' +
